@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/ToDoTile.dart';
 
-class home_stack extends StatelessWidget {
-  const home_stack({
+class HomeStack extends StatelessWidget {
+  const HomeStack({
     super.key,
   });
 
@@ -9,11 +10,15 @@ class home_stack extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        const Column(
+        ListView(
           children: [
-            Center(
-              child: Text('Welcome to To-do app'),
+            const Center(
+              child: Text('Your ToDo For Today'),
             ),
+            ToDoTile(
+              taskcompleted: false,
+              onChanged: (p0) {},
+            )
           ],
         ),
         Positioned(

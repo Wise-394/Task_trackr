@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'home_stack.dart';
+import 'HomeStack.dart';
 
 class DefaultScaffold extends StatefulWidget {
   const DefaultScaffold({
@@ -13,7 +13,7 @@ class DefaultScaffold extends StatefulWidget {
 
 class _DefaultScaffoldState extends State<DefaultScaffold> {
   int _selectedIndex = 0;
-  List<Widget> body = const [home_stack(), Placeholder()];
+  List<Widget> body = const [HomeStack(), Placeholder()];
 
   _changeIndex(int index) {
     setState(() {
@@ -26,9 +26,11 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
     var colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'To-do app',
-          style: TextStyle(color: Colors.white),
+        title: const Center(
+          child: Text(
+            'To-do',
+            style: TextStyle(color: Colors.white),
+          ),
         ),
         backgroundColor: colorScheme.primary,
       ),
