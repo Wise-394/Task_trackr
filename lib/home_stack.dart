@@ -22,8 +22,8 @@ class _HomeStackState extends State<HomeStack> {
   }
 
   List toDoList = [
-    ["make this work", false],
-    ["aaaaaaaaaaaaaaa", true],
+    ["make this listview work", false],
+    ["add new task", false],
   ];
 
   //method to create task
