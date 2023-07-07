@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/util/to_do_tile.dart';
+import 'package:todo_app/util/dialog.dart';
 
 class HomeStack extends StatefulWidget {
   const HomeStack({
@@ -11,6 +12,9 @@ class HomeStack extends StatefulWidget {
 }
 
 class _HomeStackState extends State<HomeStack> {
+  //text controller
+  final _controller = TextEditingController();
+
   void checkBoxChanged(bool? value, int index) {
     setState(() {
       toDoList[index][1] = !toDoList[index][1];
@@ -20,22 +24,29 @@ class _HomeStackState extends State<HomeStack> {
   List toDoList = [
     ["make this work", false],
     ["aaaaaaaaaaaaaaa", true],
-    ["aaaaaaaaaaaaaaa", true],
-    ["make this work", false],
-    ["make this work", false],
-    ["make this work", false],
-    ["make this work", false],
-    ["make this work", false],
-    ["make this work", false],
-    ["make this work", false],
-    ["make this work", false],
-    ["make this work", false],
-    ["make this work", false],
-    ["make this work", false],
-    ["make this work", false],
-    ["make this work", false],
-    ["make this work", false],
   ];
+
+  //method to create task
+  void createNewTask() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return DialogToDo(
+          controller: _controller,
+          onSave: saveNewTask,
+          onCancel: () => Navigator.of(context).pop(),
+        );
+      },
+    );
+  }
+
+  void saveNewTask() {
+    setState(() {
+      toDoList.add([_controller.text, false]);
+    });
+    Navigator.of(context).pop();
+    _controller.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +68,7 @@ class _HomeStackState extends State<HomeStack> {
           right: 16.0,
           child: FloatingActionButton(
             onPressed: () {
-              print("yay");
+              createNewTask();
             },
             child: const Icon(Icons.add),
           ),
