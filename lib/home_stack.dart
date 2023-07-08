@@ -54,6 +54,19 @@ class _HomeStackState extends State<HomeStack> {
     });
   }
 
+  void viewTask() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return DialogToDo(
+          controller: _controller,
+          onSave: saveNewTask,
+          onCancel: () => Navigator.of(context).pop(),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -67,6 +80,7 @@ class _HomeStackState extends State<HomeStack> {
                 onChanged: (value) => checkBoxChanged(value, index),
                 taskCompleted: toDoList[index][1],
                 deleteFunction: () => deleteTask(index),
+                viewTask: () => viewTask(),
               );
             },
           ),
