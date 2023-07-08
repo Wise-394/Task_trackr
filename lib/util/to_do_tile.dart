@@ -5,6 +5,7 @@ class ToDoTile extends StatelessWidget {
   final String taskName;
   Function(bool?)? onChanged;
   VoidCallback deleteFunction;
+  VoidCallback viewTask;
   //
 
   ToDoTile(
@@ -12,16 +13,15 @@ class ToDoTile extends StatelessWidget {
       required this.taskName,
       required this.onChanged,
       required this.taskCompleted,
-      required this.deleteFunction});
+      required this.deleteFunction,
+      required this.viewTask});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 20.0, right: 20, top: 20),
       child: InkWell(
-        onTap: () {
-          print('yay');
-        },
+        onTap: viewTask,
         child: Container(
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
@@ -30,7 +30,10 @@ class ToDoTile extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Checkbox(value: taskCompleted, onChanged: onChanged),
+              Checkbox(
+                value: taskCompleted,
+                onChanged: onChanged,
+              ), //Todo change color
               Text(
                 taskName,
                 style: TextStyle(
