@@ -48,6 +48,12 @@ class _HomeStackState extends State<HomeStack> {
     _controller.clear();
   }
 
+  void deleteTask(int index) {
+    setState(() {
+      toDoList.removeAt(index);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -57,9 +63,11 @@ class _HomeStackState extends State<HomeStack> {
             itemCount: toDoList.length,
             itemBuilder: (context, index) {
               return ToDoTile(
-                  taskName: toDoList[index][0],
-                  onChanged: (value) => checkBoxChanged(value, index),
-                  taskCompleted: toDoList[index][1]);
+                taskName: toDoList[index][0],
+                onChanged: (value) => checkBoxChanged(value, index),
+                taskCompleted: toDoList[index][1],
+                deleteFunction: () => deleteTask(index),
+              );
             },
           ),
         ),
