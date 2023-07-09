@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/util/button.dart';
 
 class DialogToDo extends StatelessWidget {
   final controller;
@@ -25,13 +26,13 @@ class DialogToDo extends StatelessWidget {
         ]),
       ),
       actions: <Widget>[
-        TextButton(
-          onPressed: onCancel,
-          child: const Text('Cancel'),
+        BtnPrototype(
+          btnAction: onCancel,
+          btnText: 'Cancel',
         ),
-        TextButton(
-          onPressed: onSave,
-          child: const Text('Save'),
+        BtnPrototype(
+          btnAction: onSave,
+          btnText: 'Save',
         ),
       ],
     );
