@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/util/button.dart';
 
-class DialogToDo extends StatefulWidget {
+class DialogToDo extends StatelessWidget {
   final controller;
   VoidCallback onSave;
   VoidCallback onCancel;
@@ -13,11 +13,6 @@ class DialogToDo extends StatefulWidget {
       required this.onSave});
 
   @override
-  State<DialogToDo> createState() => _DialogToDoState();
-}
-
-class _DialogToDoState extends State<DialogToDo> {
-  @override
   Widget build(BuildContext context) {
     return AlertDialog(
       title: const Text('New Task'),
@@ -25,18 +20,18 @@ class _DialogToDoState extends State<DialogToDo> {
         shape: const RoundedRectangleBorder(),
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           TextField(
-              controller: widget.controller,
+              controller: controller,
               decoration: const InputDecoration(
                   border: OutlineInputBorder(), labelText: 'enter task here')),
         ]),
       ),
       actions: <Widget>[
         BtnPrototype(
-          btnAction: widget.onCancel,
+          btnAction: onCancel,
           btnText: 'Cancel',
         ),
         BtnPrototype(
-          btnAction: widget.onSave,
+          btnAction: onSave,
           btnText: 'Save',
         ),
       ],
