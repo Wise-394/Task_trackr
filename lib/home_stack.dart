@@ -6,18 +6,54 @@ import 'package:todo_app/database/dbcode.dart';
 
 class HomeStack extends StatefulWidget {
   const HomeStack({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<HomeStack> createState() => _HomeStackState();
 }
 
 class _HomeStackState extends State<HomeStack> {
-  //text controller
+  // Text controller
   final _controller = TextEditingController();
 
-  //init db
+  bool isEditing = false;
+  int editedTaskIndex = -1;
+
+  void editTask() {
+    setState(() {
+      isEditing = true;
+    });
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return DialogToDo(
+          controller: _controller,
+          onSave: updateTask,
+          onCancel: () {
+            setState(() {
+              isEditing = false;
+            });
+            Navigator.of(context).pop();
+          },
+          initialText: db.toDoList[editedTaskIndex]
+              [0], // Pass the initial task text
+        );
+      },
+    );
+  }
+
+  void updateTask() {
+    setState(() {
+      db.toDoList[editedTaskIndex][0] = _controller.text;
+      isEditing = false;
+    });
+    Navigator.of(context).pop();
+    _controller.clear();
+    db.updateDB();
+  }
+
+  // Init db
   final _myBox = Hive.box('mybox');
   ToDoDB db = ToDoDB();
 
@@ -74,8 +110,10 @@ class _HomeStackState extends State<HomeStack> {
       builder: (BuildContext context) {
         return DialogToDo(
           controller: _controller,
-          onSave: saveNewTask,
+          onSave: updateTask,
           onCancel: () => Navigator.of(context).pop(),
+          initialText: db.toDoList[editedTaskIndex]
+              [0], // Pass the initial task text
         );
       },
     );
@@ -94,7 +132,12 @@ class _HomeStackState extends State<HomeStack> {
                 onChanged: (value) => checkBoxChanged(value, index),
                 taskCompleted: db.toDoList[index][1],
                 deleteFunction: () => deleteTask(index),
-                viewTask: () => viewTask(),
+                editTask: () {
+                  setState(() {
+                    editedTaskIndex = index;
+                  });
+                  viewTask();
+                },
                 newTask: false,
               );
             },
@@ -104,9 +147,7 @@ class _HomeStackState extends State<HomeStack> {
           bottom: 16.0,
           right: 16.0,
           child: FloatingActionButton(
-            onPressed: () {
-              createNewTask();
-            },
+            onPressed: createNewTask,
             child: const Icon(Icons.add),
           ),
         ),

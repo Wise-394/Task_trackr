@@ -2,33 +2,47 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/util/button.dart';
 
 class DialogToDo extends StatefulWidget {
-  final controller;
-  VoidCallback onSave;
-  VoidCallback onCancel;
+  final TextEditingController controller;
+  final VoidCallback onSave;
+  final VoidCallback onCancel;
+  final String? initialText;
 
-  DialogToDo(
-      {super.key,
-      required this.controller,
-      required this.onCancel,
-      required this.onSave});
+  DialogToDo({
+    Key? key,
+    required this.controller,
+    required this.onCancel,
+    required this.onSave,
+    this.initialText,
+  }) : super(key: key);
 
   @override
   State<DialogToDo> createState() => _DialogToDoState();
 }
 
 class _DialogToDoState extends State<DialogToDo> {
+  late String dialogTitle;
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.text = widget.initialText ?? '';
+    dialogTitle = widget.initialText != null ? 'Edit Task' : 'New Task';
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('New Task'),
-      content: Card(
-        shape: const RoundedRectangleBorder(),
-        child: Column(mainAxisSize: MainAxisSize.min, children: [
+      title: Text(dialogTitle),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
           TextField(
-              controller: widget.controller,
-              decoration: const InputDecoration(
-                  border: OutlineInputBorder(), labelText: 'enter task here')),
-        ]),
+            controller: widget.controller,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: 'Enter task here',
+            ),
+          ),
+        ],
       ),
       actions: <Widget>[
         BtnPrototype(
