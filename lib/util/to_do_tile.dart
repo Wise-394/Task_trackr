@@ -24,16 +24,18 @@ class ToDoTile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 20.0, right: 20, top: 20),
       child: InkWell(
+        customBorder:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         onTap: editTask,
         child: Ink(
           color: Theme.of(context).colorScheme.primaryContainer,
           child: Container(
             padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               children: [
                 Checkbox(
+                  activeColor: Colors.black54,
                   value: taskCompleted,
                   onChanged: onChanged,
                 ), //Todo change color
@@ -45,13 +47,9 @@ class ToDoTile extends StatelessWidget {
                           : TextDecoration.none),
                 ),
                 const Spacer(),
-                const Icon(
-                  Icons.drive_file_rename_outline,
-                  color: Colors.white70,
-                ),
                 const SizedBox(width: 10),
                 ElevatedButton(
-                    onPressed: deleteFunction, child: const Text('delete'))
+                    onPressed: deleteFunction, child: const Icon(Icons.delete))
               ],
             ),
           ),

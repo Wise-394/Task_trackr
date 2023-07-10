@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import 'home_stack.dart';
+import 'settings_page.dart';
+import 'home_page.dart';
 
 class DefaultScaffold extends StatefulWidget {
   const DefaultScaffold({
@@ -11,9 +11,11 @@ class DefaultScaffold extends StatefulWidget {
   State<DefaultScaffold> createState() => _DefaultScaffoldState();
 }
 
+void onPressed() {}
+
 class _DefaultScaffoldState extends State<DefaultScaffold> {
   int _selectedIndex = 0;
-  List<Widget> body = const [HomeStack(), Placeholder()];
+  List<Widget> body = [const HomeStack(), SettingsPage(onPressed: onPressed)];
 
   _changeIndex(int index) {
     setState(() {

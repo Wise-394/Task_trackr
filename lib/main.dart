@@ -3,29 +3,33 @@ import 'package:todo_app/default_scaffold.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
-  // init the hive
+  // Init Hive
   await Hive.initFlutter();
 
-  // open a box
+  // Open a box
   var box = await Hive.openBox('mybox');
 
   runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
+    final colorScheme = ColorScheme.fromSwatch(
+      primarySwatch: Colors.teal,
+    );
+
     return MaterialApp(
-      theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue)),
+      theme: ThemeData.dark().copyWith(
+        colorScheme: colorScheme,
+      ),
       home: const DefaultScaffold(),
     );
   }
