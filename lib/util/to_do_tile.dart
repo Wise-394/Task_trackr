@@ -3,18 +3,21 @@ import 'package:flutter/material.dart';
 class ToDoTile extends StatelessWidget {
   final bool taskCompleted;
   final String taskName;
+  final bool newTask;
   Function(bool?)? onChanged;
   VoidCallback deleteFunction;
   VoidCallback viewTask;
   //
 
-  ToDoTile(
-      {super.key,
-      required this.taskName,
-      required this.onChanged,
-      required this.taskCompleted,
-      required this.deleteFunction,
-      required this.viewTask});
+  ToDoTile({
+    super.key,
+    required this.taskName,
+    required this.onChanged,
+    required this.taskCompleted,
+    required this.deleteFunction,
+    required this.viewTask,
+    required this.newTask,
+  });
 
   @override
   Widget build(BuildContext context) {

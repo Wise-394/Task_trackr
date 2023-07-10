@@ -95,6 +95,7 @@ class _HomeStackState extends State<HomeStack> {
                 taskCompleted: db.toDoList[index][1],
                 deleteFunction: () => deleteTask(index),
                 viewTask: () => viewTask(),
+                newTask: false,
               );
             },
           ),
