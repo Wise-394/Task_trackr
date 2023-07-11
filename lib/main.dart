@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/database/task_entity.dart';
 import 'package:todo_app/default_scaffold.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   // Init Hive
+  WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-
+  Hive.registerAdapter(TaskEntityAdapter());
   // Open a box
   var box = await Hive.openBox('mybox');
 

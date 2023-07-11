@@ -1,18 +1,19 @@
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:todo_app/database/task_entity.dart';
 
 class ToDoDB {
-  List toDoList = [];
+  List<dynamic> toDoList = [];
   final _myBox = Hive.box('mybox');
 
   void initDB() {
     toDoList = [
-      ["Your Task is empty", false],
-      ["Make a new task", false],
+      TaskEntity(taskName: "test", checkMark: false),
+      TaskEntity(taskName: 'test2', checkMark: false)
     ];
   }
 
   void loadDB() {
-    toDoList = _myBox.get("TODOLIST");
+    toDoList = _myBox.get("TODOLIST") as List<dynamic>;
   }
 
   void updateDB() {

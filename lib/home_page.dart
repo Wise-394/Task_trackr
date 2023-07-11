@@ -3,6 +3,7 @@ import 'package:todo_app/util/to_do_tile.dart';
 import 'package:todo_app/util/dialog.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo_app/database/dbcode.dart';
+import 'package:todo_app/database/task_entity.dart';
 
 class HomeStack extends StatefulWidget {
   const HomeStack({
@@ -36,8 +37,8 @@ class _HomeStackState extends State<HomeStack> {
             });
             Navigator.of(context).pop();
           },
-          initialText: db.toDoList[editedTaskIndex]
-              [0], // Pass the initial task text
+          initialText: db
+              .toDoList[editedTaskIndex].taskName, // Pass the initial task text
         );
       },
     );
@@ -45,7 +46,7 @@ class _HomeStackState extends State<HomeStack> {
 
   void updateTask() {
     setState(() {
-      db.toDoList[editedTaskIndex][0] = _controller.text;
+      db.toDoList[editedTaskIndex].taskName = _controller.text;
       isEditing = false;
     });
     Navigator.of(context).pop();
@@ -70,7 +71,7 @@ class _HomeStackState extends State<HomeStack> {
 
   void checkBoxChanged(bool? value, int index) {
     setState(() {
-      db.toDoList[index][1] = !db.toDoList[index][1];
+      db.toDoList[index].checkMark = !db.toDoList[index].checkMark;
     });
     db.updateDB();
   }
@@ -90,7 +91,7 @@ class _HomeStackState extends State<HomeStack> {
 
   void saveNewTask() {
     setState(() {
-      db.toDoList.add([_controller.text, false]);
+      db.toDoList.add(TaskEntity(taskName: _controller.text, checkMark: false));
     });
     Navigator.of(context).pop();
     _controller.clear();
@@ -112,8 +113,8 @@ class _HomeStackState extends State<HomeStack> {
           controller: _controller,
           onSave: updateTask,
           onCancel: () => Navigator.of(context).pop(),
-          initialText: db.toDoList[editedTaskIndex]
-              [0], // Pass the initial task text
+          initialText: db
+              .toDoList[editedTaskIndex].taskName, // Pass the initial task text
         );
       },
     );
@@ -128,9 +129,9 @@ class _HomeStackState extends State<HomeStack> {
             itemCount: db.toDoList.length,
             itemBuilder: (context, index) {
               return ToDoTile(
-                taskName: db.toDoList[index][0],
+                taskName: db.toDoList[index].taskName,
                 onChanged: (value) => checkBoxChanged(value, index),
-                taskCompleted: db.toDoList[index][1],
+                taskCompleted: db.toDoList[index].checkMark,
                 deleteFunction: () => deleteTask(index),
                 editTask: () {
                   setState(() {

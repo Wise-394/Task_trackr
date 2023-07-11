@@ -7,7 +7,7 @@ class DialogToDo extends StatefulWidget {
   final VoidCallback onCancel;
   final String? initialText;
 
-  DialogToDo({
+  const DialogToDo({
     Key? key,
     required this.controller,
     required this.onCancel,
