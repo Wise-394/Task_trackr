@@ -24,11 +24,14 @@ class ToDoTile extends StatelessWidget {
         onTap: editTask,
         child: Ink(
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.primary,
+            border: Border.all(
+              color: Theme.of(context).colorScheme.primary,
+              width: 2,
+            ),
             borderRadius: BorderRadius.circular(10),
           ),
           child: Container(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(10),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               children: [
@@ -49,7 +52,12 @@ class ToDoTile extends StatelessWidget {
                 const SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: deleteFunction,
-                  child: const Icon(Icons.delete),
+                  child: const Row(
+                    children: [
+                      Icon(Icons.delete),
+                      Text("Delete"),
+                    ],
+                  ),
                 ),
               ],
             ),
