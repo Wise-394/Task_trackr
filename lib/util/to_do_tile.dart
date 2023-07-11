@@ -28,7 +28,7 @@ class ToDoTile extends StatelessWidget {
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         onTap: editTask,
         child: Ink(
-          color: Theme.of(context).colorScheme.primaryContainer,
+          color: Theme.of(context).colorScheme.secondary,
           child: Container(
             padding: const EdgeInsets.all(20),
             child: Row(

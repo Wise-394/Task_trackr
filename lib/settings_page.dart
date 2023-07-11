@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SettingsPage extends StatelessWidget {
-  VoidCallback onPressed;
-  SettingsPage({
+  const SettingsPage({
     super.key,
-    required this.onPressed,
   });
 
   @override
@@ -16,7 +15,13 @@ class SettingsPage extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ElevatedButton(onPressed: onPressed, child: const Text('test'))
+              ElevatedButton(
+                  onPressed: () {
+                    Get.changeTheme(
+                        Get.isDarkMode ? ThemeData.light() : ThemeData.dark());
+                    print('yay');
+                  },
+                  child: const Text('test'))
             ],
           ),
         ));
