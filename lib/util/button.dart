@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class BtnPrototype extends StatelessWidget {
-  VoidCallback btnAction;
-  String btnText;
-  BtnPrototype({
+  final VoidCallback btnAction;
+  final String btnText;
+  const BtnPrototype({
     super.key,
     required this.btnAction,
     required this.btnText,

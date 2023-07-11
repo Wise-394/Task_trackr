@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 class ToDoTile extends StatelessWidget {
   final bool taskCompleted;
   final String taskName;
-  Function(bool?)? onChanged;
-  VoidCallback deleteFunction;
-  VoidCallback editTask;
+  final Function(bool?)? onChanged;
+  final VoidCallback deleteFunction;
+  final VoidCallback editTask;
 
-  ToDoTile({
+  const ToDoTile({
     Key? key,
     required this.taskName,
     required this.onChanged,
