@@ -20,16 +20,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = ColorScheme.fromSwatch(
-      primarySwatch: Colors.teal,
-    );
-
     return GetMaterialApp(
       theme: ThemeData.light(),
-      darkTheme: ThemeData.dark().copyWith(
-        colorScheme: colorScheme,
-      ),
-      themeMode: Get.isDarkMode ? ThemeMode.light : ThemeMode.dark,
+      darkTheme: ThemeData.dark(),
+      themeMode: ThemeMode.light,
       home: const DefaultScaffold(),
     );
   }

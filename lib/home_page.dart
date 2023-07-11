@@ -139,7 +139,6 @@ class _HomeStackState extends State<HomeStack> {
                   });
                   viewTask();
                 },
-                newTask: false,
               );
             },
           ),

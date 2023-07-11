@@ -2,7 +2,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo_app/database/task_entity.dart';
 
 class ToDoDB {
-  List<dynamic> toDoList = [];
+  List<TaskEntity> toDoList = [];
   final _myBox = Hive.box('mybox');
 
   void initDB() {
@@ -13,7 +13,7 @@ class ToDoDB {
   }
 
   void loadDB() {
-    toDoList = _myBox.get("TODOLIST") as List<dynamic>;
+    toDoList = _myBox.get("TODOLIST").cast<TaskEntity>();
   }
 
   void updateDB() {
