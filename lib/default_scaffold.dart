@@ -15,7 +15,7 @@ void onPressed() {}
 
 class _DefaultScaffoldState extends State<DefaultScaffold> {
   int _selectedIndex = 0;
-  List<Widget> body = [const HomeStack(), SettingsPage()];
+  List<Widget> body = [const HomeStack(), const SettingsPage()];
 
   _changeIndex(int index) {
     setState(() {
