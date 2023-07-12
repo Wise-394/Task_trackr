@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'settings_page.dart';
-import 'home_page.dart';
+import 'screen/settings_page.dart';
+import 'screen/home_page.dart';
 
 class DefaultScaffold extends StatefulWidget {
   const DefaultScaffold({

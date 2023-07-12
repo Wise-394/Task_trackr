@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../database/sharedpref.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -9,9 +10,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  void changeTheme() {
-    Get.changeTheme(Get.isDarkMode ? ThemeData.light() : ThemeData.dark());
-  }
+  SharedPref sp = SharedPref();
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +39,7 @@ class _SettingsPageState extends State<SettingsPage> {
             const Spacer(),
             ElevatedButton(
               onPressed: () {
-                changeTheme();
+                sp.changeTheme();
               },
               child: Row(
                 children: [
