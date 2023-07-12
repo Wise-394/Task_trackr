@@ -19,4 +19,14 @@ class ToDoDB {
   void updateDB() {
     _myBox.put("TODOLIST", toDoList);
   }
+
+  int getUncompleteTask() {
+    int uncompleteTask = 0;
+    for (int i = 0; i < toDoList.length; i++) {
+      if (!toDoList[i].checkMark) {
+        uncompleteTask++;
+      }
+    }
+    return uncompleteTask;
+  }
 }

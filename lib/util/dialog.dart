@@ -36,6 +36,9 @@ class _DialogToDoState extends State<DialogToDo> {
         mainAxisSize: MainAxisSize.min,
         children: [
           TextField(
+            minLines: 1,
+            maxLines: 3,
+            keyboardType: TextInputType.multiline,
             controller: widget.controller,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),

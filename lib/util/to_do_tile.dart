@@ -25,7 +25,9 @@ class ToDoTile extends StatelessWidget {
         child: Ink(
           decoration: BoxDecoration(
             border: Border.all(
-              color: Theme.of(context).colorScheme.primary,
+              color: taskCompleted
+                  ? Theme.of(context).colorScheme.background
+                  : Theme.of(context).colorScheme.primary,
               width: 2,
             ),
             borderRadius: BorderRadius.circular(10),
@@ -40,16 +42,19 @@ class ToDoTile extends StatelessWidget {
                   value: taskCompleted,
                   onChanged: onChanged,
                 ),
-                Text(
-                  taskName,
-                  style: TextStyle(
-                    decoration: taskCompleted
-                        ? TextDecoration.lineThrough
-                        : TextDecoration.none,
+                Flexible(
+                  flex: 5,
+                  fit: FlexFit.tight,
+                  child: Text(
+                    softWrap: true,
+                    taskName,
+                    style: TextStyle(
+                      decoration: taskCompleted
+                          ? TextDecoration.lineThrough
+                          : TextDecoration.none,
+                    ),
                   ),
                 ),
-                const Spacer(),
-                const SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: deleteFunction,
                   child: const Row(

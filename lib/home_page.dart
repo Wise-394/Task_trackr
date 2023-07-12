@@ -78,6 +78,7 @@ class _HomeStackState extends State<HomeStack> {
 
   void createNewTask() {
     showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
         return DialogToDo(
@@ -107,6 +108,7 @@ class _HomeStackState extends State<HomeStack> {
 
   void viewTask() {
     showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
         return DialogToDo(
@@ -122,26 +124,51 @@ class _HomeStackState extends State<HomeStack> {
 
   @override
   Widget build(BuildContext context) {
+    int uncompletedCount = db.getUncompleteTask();
     return Stack(
       children: [
-        Scaffold(
-          body: ListView.builder(
-            itemCount: db.toDoList.length,
-            itemBuilder: (context, index) {
-              return ToDoTile(
-                taskName: db.toDoList[index].taskName,
-                onChanged: (value) => checkBoxChanged(value, index),
-                taskCompleted: db.toDoList[index].checkMark,
-                deleteFunction: () => deleteTask(index),
-                editTask: () {
-                  setState(() {
-                    editedTaskIndex = index;
-                  });
-                  viewTask();
-                },
-              );
-            },
-          ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  const SizedBox(height: 10),
+                  Text(
+                    uncompletedCount != 0
+                        ? "Hello! you have $uncompletedCount uncomplete task today"
+                        : "You currently have no task!",
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: Scaffold(
+                body: ListView.builder(
+                  itemCount: db.toDoList.length,
+                  itemBuilder: (context, index) {
+                    return ToDoTile(
+                      taskName: db.toDoList[index].taskName,
+                      onChanged: (value) => checkBoxChanged(value, index),
+                      taskCompleted: db.toDoList[index].checkMark,
+                      deleteFunction: () => deleteTask(index),
+                      editTask: () {
+                        setState(() {
+                          editedTaskIndex = index;
+                        });
+                        viewTask();
+                      },
+                    );
+                  },
+                ),
+              ),
+            ),
+          ],
         ),
         Positioned(
           bottom: 16.0,
