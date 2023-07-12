@@ -38,6 +38,7 @@ class ToDoTile extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Checkbox(
+                  shape: const CircleBorder(),
                   activeColor: Colors.black54,
                   value: taskCompleted,
                   onChanged: onChanged,
@@ -56,6 +57,13 @@ class ToDoTile extends StatelessWidget {
                   ),
                 ),
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: taskCompleted
+                        ? Theme.of(context).colorScheme.primary
+                        : Theme.of(context)
+                            .colorScheme
+                            .surfaceTint, // Background color
+                  ),
                   onPressed: deleteFunction,
                   child: const Row(
                     children: [

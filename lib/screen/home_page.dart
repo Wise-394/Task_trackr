@@ -138,8 +138,8 @@ class _HomeStackState extends State<HomeStack> {
                   const SizedBox(height: 10),
                   Text(
                     uncompletedCount != 0
-                        ? "Hello! you have $uncompletedCount uncomplete task today"
-                        : "You currently have no task!",
+                        ? "Welcome! you have $uncompletedCount uncomplete task today"
+                        : "You currently have no task to complete!",
                     style: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
