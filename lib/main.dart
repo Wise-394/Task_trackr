@@ -27,13 +27,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     sp.loadTheme();
-    var theme = SharedPref.isDarkmode ? ThemeData.dark() : ThemeData.light();
+    var theme = SharedPref.isDarkmode ? ThemeMode.dark : ThemeMode.light;
+    // print("restarted isdarkmode = $theme");
     //if its darkmode then theme will be light mode vice versa
     // i know this is stupid but im dumb to find the actual problem so i reversed
     // it instead, then it suddenly works
     return GetMaterialApp(
-      theme: theme,
+      theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
+      themeMode: theme,
       home: const DefaultScaffold(),
     );
   }
