@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../database/sharedpref.dart';
+import '../util/change_pin_dialog.dart';
+import '../util/settings_tile.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -11,78 +13,36 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   SharedPref sp = SharedPref();
+  void onPressChangePin() {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return ChangePinDialog(
+          onSave: () => Navigator.of(context).pop(),
+          onCancel: () => Navigator.of(context).pop(),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        changeThemeTile(context),
-        changePinTile(context),
+        SettingsTile(
+          tileTile: "Change Theme",
+          iconImg: Get.isDarkMode ? Icons.sunny : Icons.mode_night,
+          iconText: Get.isDarkMode ? "Light mode" : "Dark Mode",
+          onPressed: sp.changeTheme,
+        ),
+        SettingsTile(
+          tileTile: "Change Pin",
+          iconText: "PIN",
+          iconImg: Icons.pin,
+          onPressed: onPressChangePin,
+        ),
       ],
-    );
-  }
-
-  Padding changeThemeTile(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Theme.of(context).colorScheme.primary,
-            width: 2,
-          ),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Row(
-          children: [
-            const Text("Change Theme"),
-            const Spacer(),
-            ElevatedButton(
-              onPressed: () {
-                sp.changeTheme();
-              },
-              child: Row(
-                children: [
-                  Icon(Get.isDarkMode ? Icons.sunny : Icons.mode_night),
-                  Text(Get.isDarkMode ? "Light mode" : "Dark Mode"),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Padding changePinTile(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Theme.of(context).colorScheme.primary,
-            width: 2,
-          ),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Row(
-          children: [
-            const Text("Change Pin"),
-            const Spacer(),
-            ElevatedButton(
-              onPressed: () {},
-              child: const Row(
-                children: [
-                  Icon(Icons.pin),
-                  Text("PIN"),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

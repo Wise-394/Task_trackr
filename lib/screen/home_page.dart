@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/util/to_do_tile.dart';
-import 'package:todo_app/util/dialog.dart';
+import 'package:todo_app/util/task_dialog.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo_app/database/dbcode.dart';
 import 'package:todo_app/database/task_entity.dart';
