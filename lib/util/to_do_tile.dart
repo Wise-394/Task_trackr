@@ -39,7 +39,7 @@ class ToDoTile extends StatelessWidget {
               children: [
                 Checkbox(
                   shape: const CircleBorder(),
-                  activeColor: Colors.black54,
+                  activeColor: Theme.of(context).colorScheme.primary,
                   value: taskCompleted,
                   onChanged: onChanged,
                 ),
@@ -60,9 +60,7 @@ class ToDoTile extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: taskCompleted
                         ? Theme.of(context).colorScheme.primary
-                        : Theme.of(context)
-                            .colorScheme
-                            .surfaceTint, // Background color
+                        : Theme.of(context).colorScheme.surfaceTint,
                   ),
                   onPressed: deleteFunction,
                   child: const Row(

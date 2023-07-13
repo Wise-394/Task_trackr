@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/database/sharedpref.dart';
 import 'package:todo_app/util/to_do_tile.dart';
 import 'package:todo_app/util/dialog.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -38,8 +37,7 @@ class _HomeStackState extends State<HomeStack> {
             });
             Navigator.of(context).pop();
           },
-          initialText: db
-              .toDoList[editedTaskIndex].taskName, // Pass the initial task text
+          initialText: db.toDoList[editedTaskIndex].taskName,
         );
       },
     );
@@ -93,7 +91,10 @@ class _HomeStackState extends State<HomeStack> {
 
   void saveNewTask() {
     setState(() {
-      db.toDoList.add(TaskEntity(taskName: _controller.text, checkMark: false));
+      if (_controller.text.isNotEmpty) {
+        db.toDoList
+            .add(TaskEntity(taskName: _controller.text, checkMark: false));
+      }
     });
     Navigator.of(context).pop();
     _controller.clear();
@@ -116,8 +117,7 @@ class _HomeStackState extends State<HomeStack> {
           controller: _controller,
           onSave: updateTask,
           onCancel: () => Navigator.of(context).pop(),
-          initialText: db
-              .toDoList[editedTaskIndex].taskName, // Pass the initial task text
+          initialText: db.toDoList[editedTaskIndex].taskName,
         );
       },
     );

@@ -16,12 +16,13 @@ class SharedPref {
 
   void changeTheme() {
     if (Get.isDarkMode) {
-      Get.changeTheme(ThemeData.light());
+      Get.changeThemeMode(ThemeMode.light);
       isDarkmode = false;
     } else {
-      Get.changeTheme(ThemeData.dark());
+      Get.changeThemeMode(ThemeMode.dark);
       isDarkmode = true;
     }
     updateTheme();
+    //  print("updatedTheme isdarkmode = $isDarkmode");
   }
 }
