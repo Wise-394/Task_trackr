@@ -13,13 +13,24 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   SharedPref sp = SharedPref();
+  final _textEditingController = TextEditingController();
+
+  void onSavePin() {
+    if (_textEditingController.text.isNotEmpty &&
+        _textEditingController.text.isNumericOnly) {
+      sp.updatePin(int.parse(_textEditingController.text));
+      Navigator.of(context).pop();
+    }
+  }
+
   void onPressChangePin() {
     showDialog(
       barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
         return ChangePinDialog(
-          onSave: () => Navigator.of(context).pop(),
+          textController: _textEditingController,
+          onSave: () => onSavePin(),
           onCancel: () => Navigator.of(context).pop(),
         );
       },

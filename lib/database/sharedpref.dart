@@ -3,7 +3,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:get/get.dart';
 
 class SharedPref {
-  static bool isDarkmode = false;
+  //theme
+  bool isDarkmode = false;
   final _sharedPref = Hive.box('mybox');
 
   void loadTheme() {
@@ -24,5 +25,17 @@ class SharedPref {
     }
     updateTheme();
     //  print("updatedTheme isdarkmode = $isDarkmode");
+  }
+
+  //pin
+  int pin = 0;
+  void loadPin() {
+    pin = _sharedPref.get('pin', defaultValue: 0);
+    print(pin);
+  }
+
+  void updatePin(int pinToUpdate) {
+    _sharedPref.put('pin', pinToUpdate);
+    pin = pinToUpdate;
   }
 }

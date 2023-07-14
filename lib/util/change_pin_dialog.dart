@@ -5,10 +5,12 @@ import 'button.dart';
 class ChangePinDialog extends StatefulWidget {
   final VoidCallback onCancel;
   final VoidCallback onSave;
+  final TextEditingController textController;
   const ChangePinDialog({
     super.key,
     required this.onSave,
     required this.onCancel,
+    required this.textController,
   });
 
   @override
@@ -20,9 +22,10 @@ class _ChangePinDialog extends State<ChangePinDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
         title: const Text("Change Pin"),
-        content: const Column(mainAxisSize: MainAxisSize.min, children: [
+        content: Column(mainAxisSize: MainAxisSize.min, children: [
           TextField(
-            decoration: InputDecoration(
+            controller: widget.textController,
+            decoration: const InputDecoration(
               border: OutlineInputBorder(),
             ),
             keyboardType: TextInputType.number,
