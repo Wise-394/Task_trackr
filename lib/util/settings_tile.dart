@@ -21,7 +21,7 @@ class _SettingsTileState extends State<SettingsTile> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
       child: Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
