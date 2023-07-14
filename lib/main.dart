@@ -3,6 +3,7 @@ import 'package:todo_app/database/task_entity.dart';
 import 'package:todo_app/default_scaffold.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:get/get.dart';
+import 'package:todo_app/screen/pin_page.dart';
 import 'database/sharedpref.dart';
 
 void main() async {
@@ -10,18 +11,16 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(TaskEntityAdapter());
-  // Open a box
   var box = await Hive.openBox('mybox');
+
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
 
-  //init sharedpref
+  // Initialize shared preferences
   final SharedPref sp = SharedPref();
-
-  //init theme
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +32,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       themeMode: theme,
-      home: const DefaultScaffold(),
+      initialRoute: sp.pin == 0 ? '/lock' : '/home',
+      //no pin == lockscreen
+      routes: {
+        '/lock': (context) => PinPage(),
+        '/home': (context) => DefaultScaffold(),
+      },
     );
   }
 }
