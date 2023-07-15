@@ -14,6 +14,20 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   SharedPref sp = SharedPref();
   final _textEditingController = TextEditingController();
+  bool switchOn = false;
+
+  @override
+  void initState() {
+    super.initState();
+    switchOn = sp.getPinSwitch(); // Set switchOn based on pinSwitch value
+  }
+
+  void onPressSwitch(bool value) {
+    setState(() {
+      switchOn = value;
+      sp.updatePinSwitch(switchOn);
+    });
+  }
 
   void onSavePin() {
     if (_textEditingController.text.isNotEmpty &&
@@ -43,11 +57,19 @@ class _SettingsPageState extends State<SettingsPage> {
       children: [
         SettingsTile(
           tileTile: "Change Theme",
-          iconImg: Get.isDarkMode ? Icons.sunny : Icons.mode_night,
-          iconText: Get.isDarkMode ? "Light mode" : "Dark Mode",
-          onPressed: sp.changeTheme,
+          iconImg: sp.getTheme() ? Icons.sunny : Icons.mode_night,
+          iconText: sp.getTheme() ? "Light mode" : "Dark Mode",
+          onPressed: () {
+            sp.changeTheme();
+            setState(() {}); // Add this line to update the widget state
+          },
         ),
+        SettingsSwitchTile(
+            tileTile: "Enable Pin Lock",
+            value: switchOn,
+            onChanged: (value) => onPressSwitch(value!)),
         SettingsTile(
+          enabled: switchOn,
           tileTile: "Change Pin",
           iconText: "PIN",
           iconImg: Icons.pin,

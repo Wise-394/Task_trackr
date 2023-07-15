@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 class SharedPref {
   //theme
-  bool isDarkmode = false;
+  static bool isDarkmode = false;
   final _sharedPref = Hive.box('mybox');
 
   void loadTheme() {
@@ -13,6 +13,10 @@ class SharedPref {
 
   void updateTheme() {
     _sharedPref.put('themeMode', isDarkmode);
+  }
+
+  bool getTheme() {
+    return isDarkmode;
   }
 
   void changeTheme() {
@@ -28,7 +32,8 @@ class SharedPref {
   }
 
   //pin
-  int pin = 0;
+  static int pin = 0;
+  static bool isPinEnable = false;
   void loadPin() {
     pin = _sharedPref.get('pin', defaultValue: 0);
     print("current pin is $pin");
@@ -41,5 +46,18 @@ class SharedPref {
 
   int getPin() {
     return pin;
+  }
+
+  void loadPinSwitch() {
+    isPinEnable = _sharedPref.get('pinSwitch', defaultValue: false);
+  }
+
+  void updatePinSwitch(bool pinSwitchValue) {
+    _sharedPref.put('pinSwitch', pinSwitchValue);
+    isPinEnable = pinSwitchValue;
+  }
+
+  bool getPinSwitch() {
+    return isPinEnable;
   }
 }

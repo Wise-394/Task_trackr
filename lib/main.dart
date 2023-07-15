@@ -12,21 +12,31 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(TaskEntityAdapter());
   var box = await Hive.openBox('mybox');
+  final SharedPref sp = SharedPref();
+  sp.loadTheme();
+  sp.loadPin();
+  sp.loadPinSwitch();
+  var theme = sp.getTheme() ? ThemeMode.dark : ThemeMode.light;
+  var route = sp.getPin() != 0 && sp.getPinSwitch() ? '/lock' : '/home';
 
-  runApp(MyApp());
+  runApp(MyApp(
+    theme: theme,
+    route: route,
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({Key? key}) : super(key: key);
-  final SharedPref sp = SharedPref();
+  final ThemeMode theme;
+  final String route;
+  const MyApp({
+    Key? key,
+    required this.theme,
+    required this.route,
+  }) : super(key: key);
 
   @override
   @override
   Widget build(BuildContext context) {
-    sp.loadTheme();
-    sp.loadPin();
-    var theme = sp.isDarkmode ? ThemeMode.dark : ThemeMode.light;
-    var route = sp.getPin() > 0 ? '/lock' : '/home';
     print("current route value is $route");
     return GetMaterialApp(
       theme: ThemeData.light(),
