@@ -21,7 +21,7 @@ class _PinPage extends State<PinPage> {
     final pin = sp.getPin();
     if (_textController.text.isNotEmpty &&
         _textController.text == pin.toString()) {
-      Get.off(() => DefaultScaffold());
+      Get.off(() => const DefaultScaffold());
       print("GOINGNOW");
     }
   }
@@ -82,9 +82,12 @@ class _PinPage extends State<PinPage> {
                 ),
               ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              PinButtonIcon(
-                btnIcon: Icons.clear,
-                methodToDo: onPressClear,
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: PinButtonIcon(
+                  btnIcon: Icons.clear,
+                  methodToDo: onPressClear,
+                ),
               ),
               PinButton(pinText: 0, textEditingController: _textController),
               PinButtonIcon(methodToDo: onPressCheck, btnIcon: Icons.check)

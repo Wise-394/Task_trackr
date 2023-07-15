@@ -132,17 +132,37 @@ class _HomeStackState extends State<HomeStack> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(10.0),
               child: Column(
                 children: [
                   const SizedBox(height: 10),
-                  Text(
-                    uncompletedCount != 0
-                        ? "Welcome! you have $uncompletedCount uncomplete task today"
-                        : "You currently have no task to complete!",
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
+                  const Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 20),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text("Welcome!",
+                              style: TextStyle(
+                                fontSize: 30,
+                              )),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        uncompletedCount != 0
+                            ? "you have $uncompletedCount uncomplete task today"
+                            : "You currently have no task to complete!",
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ),
                 ],

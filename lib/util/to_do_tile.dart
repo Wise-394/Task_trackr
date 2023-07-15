@@ -24,6 +24,7 @@ class ToDoTile extends StatelessWidget {
         onTap: editTask,
         child: Ink(
           decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surface,
             border: Border.all(
               color: taskCompleted
                   ? Theme.of(context).colorScheme.background

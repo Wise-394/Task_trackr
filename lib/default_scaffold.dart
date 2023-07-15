@@ -29,13 +29,17 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
     var colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
+        title: Center(
           child: Text(
-            'To-do',
-            style: TextStyle(color: Colors.white),
+            'TODO',
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.primary,
+              fontSize: 30,
+            ),
           ),
         ),
-        backgroundColor: colorScheme.primary,
+        backgroundColor: colorScheme.surface,
+        elevation: 0,
       ),
       body: Center(child: body[_selectedIndex]),
       bottomNavigationBar: BottomNavigationBar(

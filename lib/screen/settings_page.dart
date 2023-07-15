@@ -31,7 +31,9 @@ class _SettingsPageState extends State<SettingsPage> {
 
   void onSavePin() {
     if (_textEditingController.text.isNotEmpty &&
-        _textEditingController.text.isNumericOnly) {
+        _textEditingController.text.isNumericOnly &&
+        _textEditingController.text.length.isGreaterThan(0) &&
+        _textEditingController.text.length.isLowerThan(9)) {
       sp.updatePin(int.parse(_textEditingController.text));
       Navigator.of(context).pop();
     }

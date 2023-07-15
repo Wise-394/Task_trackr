@@ -11,11 +11,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(TaskEntityAdapter());
-  var box = await Hive.openBox('mybox');
+  await Hive.openBox('mybox');
   final SharedPref sp = SharedPref();
-  sp.loadTheme();
-  sp.loadPin();
-  sp.loadPinSwitch();
+  _initData();
   var theme = sp.getTheme() ? ThemeMode.dark : ThemeMode.light;
   var route = sp.getPin() != 0 && sp.getPinSwitch() ? '/lock' : '/home';
 
@@ -23,6 +21,13 @@ void main() async {
     theme: theme,
     route: route,
   ));
+}
+
+void _initData() {
+  final SharedPref sp = SharedPref();
+  sp.loadTheme();
+  sp.loadPin();
+  sp.loadPinSwitch();
 }
 
 class MyApp extends StatelessWidget {
