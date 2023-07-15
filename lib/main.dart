@@ -18,25 +18,24 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
-
-  // Initialize shared preferences
   final SharedPref sp = SharedPref();
 
+  @override
   @override
   Widget build(BuildContext context) {
     sp.loadTheme();
     sp.loadPin();
     var theme = sp.isDarkmode ? ThemeMode.dark : ThemeMode.light;
-    // print("restarted isdarkmode = $theme");
+    var route = sp.getPin() > 0 ? '/lock' : '/home';
+    print("current route value is $route");
     return GetMaterialApp(
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       themeMode: theme,
-      initialRoute: sp.pin == 0 ? '/lock' : '/home',
-      //no pin == lockscreen
+      initialRoute: route,
       routes: {
-        '/lock': (context) => PinPage(),
-        '/home': (context) => DefaultScaffold(),
+        '/lock': (context) => const PinPage(),
+        '/home': (context) => const DefaultScaffold(),
       },
     );
   }

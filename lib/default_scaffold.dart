@@ -25,6 +25,7 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
 
   @override
   Widget build(BuildContext context) {
+    print("current page is home");
     var colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(

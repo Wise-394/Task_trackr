@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/screen/home_page.dart';
+import 'package:get/get.dart';
+import 'package:todo_app/database/sharedpref.dart';
+import 'package:todo_app/default_scaffold.dart';
 
 class PinPage extends StatefulWidget {
   const PinPage({super.key});
@@ -13,7 +15,30 @@ class _PinPage extends State<PinPage> {
     Navigator.of(context).pushReplacementNamed('/home');
   }
 
+  var sp = SharedPref();
+  void onPressCheck() {
+    sp.loadPin();
+    final pin = sp.getPin();
+    if (_textController.text.isNotEmpty &&
+        _textController.text == pin.toString()) {
+      Get.off(() => DefaultScaffold());
+      print("GOINGNOW");
+    }
+  }
+
   //Navigator.of(context).pushReplacementNamed('/home');
+  final _textController = TextEditingController();
+  void onPressNum(int num) {
+    _textController.text += num.toString();
+  }
+
+  void onPressClear() {
+    String currentText = _textController.text;
+    if (currentText.isNotEmpty) {
+      String updatedText = currentText.substring(0, currentText.length - 1);
+      _textController.text = updatedText;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +48,16 @@ class _PinPage extends State<PinPage> {
           mainAxisSize: MainAxisSize.max,
           children: [
             const SizedBox(height: 150),
-            const SizedBox(
+            SizedBox(
               width: 250,
               child: TextField(
+                obscureText: true,
+                style: TextStyle(
+                    fontSize: 25, color: Theme.of(context).colorScheme.primary),
+                controller: _textController,
                 enabled: false,
                 textAlign: TextAlign.center,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                   ),
@@ -46,16 +75,20 @@ class _PinPage extends State<PinPage> {
                     // Generate PinButton widgets for each column
                     for (int col = 1; col <= 3; col++)
                       PinButton(
+                        textEditingController: _textController,
                         pinText: row * 3 + col,
                       ),
                   ],
                 ),
               ),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pushReplacementNamed('/home');
-                },
-                child: Text("done for today"))
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              PinButtonIcon(
+                btnIcon: Icons.clear,
+                methodToDo: onPressClear,
+              ),
+              PinButton(pinText: 0, textEditingController: _textController),
+              PinButtonIcon(methodToDo: onPressCheck, btnIcon: Icons.check)
+            ]),
           ],
         ),
       ),
@@ -63,17 +96,45 @@ class _PinPage extends State<PinPage> {
   }
 }
 
-class PinButton extends StatelessWidget {
-  final int pinText;
-  const PinButton({
-    required this.pinText,
+class PinButtonIcon extends StatelessWidget {
+  final VoidCallback methodToDo;
+  final IconData btnIcon;
+  const PinButtonIcon({
     super.key,
+    required this.methodToDo,
+    required this.btnIcon,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-        onPressed: () {},
+        onPressed: methodToDo,
+        style: TextButton.styleFrom(
+          minimumSize: const Size(100, 70),
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10))),
+          backgroundColor: Colors.transparent,
+          textStyle: const TextStyle(fontSize: 25),
+        ),
+        child: Icon(btnIcon));
+  }
+}
+
+class PinButton extends StatelessWidget {
+  final int pinText;
+  final TextEditingController textEditingController;
+  const PinButton({
+    required this.pinText,
+    super.key,
+    required this.textEditingController,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+        onPressed: () {
+          textEditingController.text += pinText.toString();
+        },
         style: TextButton.styleFrom(
           minimumSize: const Size(100, 70),
           shape: const RoundedRectangleBorder(

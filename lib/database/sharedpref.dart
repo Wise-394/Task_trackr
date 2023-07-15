@@ -31,11 +31,15 @@ class SharedPref {
   int pin = 0;
   void loadPin() {
     pin = _sharedPref.get('pin', defaultValue: 0);
-    print(pin);
+    print("current pin is $pin");
   }
 
   void updatePin(int pinToUpdate) {
     _sharedPref.put('pin', pinToUpdate);
     pin = pinToUpdate;
+  }
+
+  int getPin() {
+    return pin;
   }
 }
