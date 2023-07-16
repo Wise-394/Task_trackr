@@ -29,6 +29,8 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
     var colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
         title: Center(
           child: Text(
             'TODO',
@@ -38,11 +40,11 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
             ),
           ),
         ),
-        backgroundColor: colorScheme.surface,
-        elevation: 0,
       ),
       body: Center(child: body[_selectedIndex]),
       bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Theme.of(context).colorScheme.background,
+          selectedItemColor: Theme.of(context).colorScheme.primary,
           currentIndex: _selectedIndex,
           onTap: (int newIndex) {
             _changeIndex(newIndex);

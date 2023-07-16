@@ -40,6 +40,8 @@ class _SettingsTileState extends State<SettingsTile> {
             Text(widget.tileTile),
             const Spacer(),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).colorScheme.secondary),
               onPressed: widget.enabled ? widget.onPressed : null,
               child: Row(
                 children: [

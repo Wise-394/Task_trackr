@@ -51,6 +51,8 @@ class ToDoTile extends StatelessWidget {
                     softWrap: true,
                     taskName,
                     style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.primary,
                       decoration: taskCompleted
                           ? TextDecoration.lineThrough
                           : TextDecoration.none,
@@ -59,10 +61,7 @@ class ToDoTile extends StatelessWidget {
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: taskCompleted
-                        ? Theme.of(context).colorScheme.primary
-                        : Theme.of(context).colorScheme.surfaceTint,
-                  ),
+                      backgroundColor: Theme.of(context).colorScheme.secondary),
                   onPressed: deleteFunction,
                   child: const Row(
                     children: [

@@ -108,6 +108,17 @@ class _HomeStackState extends State<HomeStack> {
     db.updateDB();
   }
 
+  void onReorder(int oldIndex, int newIndex) {
+    setState(() {
+      if (newIndex > oldIndex) {
+        newIndex -= 1;
+      }
+      final task = db.toDoList.removeAt(oldIndex);
+      db.toDoList.insert(newIndex, task);
+    });
+    db.updateDB();
+  }
+
   void viewTask() {
     showDialog(
       barrierDismissible: false,
@@ -132,20 +143,22 @@ class _HomeStackState extends State<HomeStack> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.only(left: 10.0, right: 10),
               child: Column(
                 children: [
                   const SizedBox(height: 10),
-                  const Row(
+                  Row(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(left: 20),
+                        padding: const EdgeInsets.only(left: 20),
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text("Welcome!",
                               style: TextStyle(
-                                fontSize: 30,
-                              )),
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold)),
                         ),
                       ),
                     ],
@@ -170,10 +183,12 @@ class _HomeStackState extends State<HomeStack> {
             ),
             Expanded(
               child: Scaffold(
-                body: ListView.builder(
+                body: ReorderableListView.builder(
+                  onReorder: onReorder,
                   itemCount: db.toDoList.length,
                   itemBuilder: (context, index) {
                     return ToDoTile(
+                      key: Key('$index'),
                       taskName: db.toDoList[index].taskName,
                       onChanged: (value) => checkBoxChanged(value, index),
                       taskCompleted: db.toDoList[index].checkMark,
@@ -195,6 +210,7 @@ class _HomeStackState extends State<HomeStack> {
           bottom: 16.0,
           right: 16.0,
           child: FloatingActionButton(
+            backgroundColor: Theme.of(context).colorScheme.tertiary,
             onPressed: createNewTask,
             child: const Icon(Icons.add),
           ),

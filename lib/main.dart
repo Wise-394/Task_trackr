@@ -5,6 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:get/get.dart';
 import 'package:todo_app/screen/pin_page.dart';
 import 'database/sharedpref.dart';
+import 'themes/light_mode.dart';
 
 void main() async {
   // Init Hive
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     print("current route value is $route");
     return GetMaterialApp(
-      theme: ThemeData.light(),
+      theme: lightTheme,
       darkTheme: ThemeData.dark(),
       themeMode: theme,
       initialRoute: route,
