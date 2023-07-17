@@ -4,6 +4,7 @@ import 'package:todo_app/default_scaffold.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:get/get.dart';
 import 'package:todo_app/screen/pin_page.dart';
+import 'package:todo_app/themes/dark_mode.dart';
 import 'database/sharedpref.dart';
 import 'themes/light_mode.dart';
 
@@ -46,7 +47,7 @@ class MyApp extends StatelessWidget {
     print("current route value is $route");
     return GetMaterialApp(
       theme: lightTheme,
-      darkTheme: ThemeData.dark(),
+      darkTheme: darkTheme,
       themeMode: theme,
       initialRoute: route,
       routes: {

@@ -26,17 +26,16 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
   @override
   Widget build(BuildContext context) {
     print("current page is home");
-    var colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        elevation: 0.0,
+        elevation: 0,
         title: Center(
           child: Text(
-            'TODO',
+            'Task Trackr',
             style: TextStyle(
               color: Theme.of(context).colorScheme.primary,
-              fontSize: 30,
+              fontSize: 20,
             ),
           ),
         ),

@@ -38,11 +38,14 @@ class ToDoTile extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.max,
               children: [
-                Checkbox(
-                  shape: const CircleBorder(),
-                  activeColor: Theme.of(context).colorScheme.primary,
-                  value: taskCompleted,
-                  onChanged: onChanged,
+                Transform.scale(
+                  scale: 1.5,
+                  child: Checkbox(
+                    shape: const CircleBorder(),
+                    activeColor: Theme.of(context).colorScheme.primary,
+                    value: taskCompleted,
+                    onChanged: onChanged,
+                  ),
                 ),
                 Flexible(
                   flex: 5,
@@ -51,8 +54,8 @@ class ToDoTile extends StatelessWidget {
                     softWrap: true,
                     taskName,
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.primary,
+                      //fontWeight: FontWeight.bold,
+                      //color: Theme.of(context).colorScheme.primary,
                       decoration: taskCompleted
                           ? TextDecoration.lineThrough
                           : TextDecoration.none,
@@ -66,7 +69,7 @@ class ToDoTile extends StatelessWidget {
                   child: const Row(
                     children: [
                       Icon(Icons.delete),
-                      Text("Delete"),
+                      //Text("Delete"),
                     ],
                   ),
                 ),

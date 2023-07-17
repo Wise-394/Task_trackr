@@ -21,7 +21,12 @@ class _PinPage extends State<PinPage> {
     final pin = sp.getPin();
     if (_textController.text.isNotEmpty &&
         _textController.text == pin.toString()) {
-      Get.off(() => const DefaultScaffold());
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const DefaultScaffold(),
+        ),
+      );
       print("GOINGNOW");
     }
   }
