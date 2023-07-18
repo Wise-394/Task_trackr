@@ -13,7 +13,7 @@ Task Trackr is a simple and user-friendly todo app that helps you stay organized
 
 ## Features
 
--Task Management: Add, edit, and remove tasks effortlessly..
+- Task Management: Add, edit, and remove tasks effortlessly.
 - Pin Security: Keep your tasks secure with pin protection.
 - Theme Customization: Personalize your Task Trackr experience with dark and light themes.
 - Drag and Drop: Easily reorder your tasks by simply dragging and dropping them in the desired order.
