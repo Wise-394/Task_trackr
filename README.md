@@ -3,6 +3,13 @@
 
 Task Trackr is a simple and user-friendly todo app that helps you stay organized and manage your tasks effectively. With features like pin security and theme customizatiom. Task Trackr is the companion for your productivity needs.
 
+## Tech used
+
+
+![flutter](https://img.shields.io/badge/Flutter-black?style=for-the-badge&logo=flutter&logoColor=white)
+![vscode](https://img.shields.io/badge/vscode-black?style=for-the-badge&logo=vscode&logoColor=white)
+![hive](https://img.shields.io/badge/hive-black?style=for-the-badge&logo=hive&logoColor=white)
+
 
 ## Features
 
@@ -10,10 +17,6 @@ Task Trackr is a simple and user-friendly todo app that helps you stay organized
 - Pin Security: Keep your tasks secure with pin protection.
 - Theme Customization: Personalize your Task Trackr experience with dark and light themes.
 - Drag and Drop: Easily reorder your tasks by simply dragging and dropping them in the desired order.
-
-
-## Screenshots
-
 
 
 ## Screenshots
