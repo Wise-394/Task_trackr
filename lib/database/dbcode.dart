@@ -3,6 +3,8 @@ import 'package:todo_app/database/task_entity.dart';
 
 class ToDoDB {
   List<TaskEntity> toDoList = [];
+  List<TaskEntity> toDoListCompleted = [];
+  List<TaskEntity> toDoListUncomplete = [];
   final _myBox = Hive.box('mybox');
 
   void initDB() {
@@ -28,5 +30,13 @@ class ToDoDB {
       }
     }
     return uncompleteTask;
+  }
+
+  List<TaskEntity> getCompletedTasks() {
+    return toDoList.where((task) => task.checkMark).toList();
+  }
+
+  List<TaskEntity> getUncompletedTasks() {
+    return toDoList.where((task) => !task.checkMark).toList();
   }
 }

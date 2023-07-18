@@ -14,7 +14,10 @@ class HomeStack extends StatefulWidget {
   State<HomeStack> createState() => _HomeStackState();
 }
 
-class _HomeStackState extends State<HomeStack> {
+class _HomeStackState extends State<HomeStack>
+    with SingleTickerProviderStateMixin {
+  late final TabController _tabController;
+
   // Text controller
   final _controller = TextEditingController();
 
@@ -64,13 +67,27 @@ class _HomeStackState extends State<HomeStack> {
     } else {
       db.loadDB();
     }
-
     super.initState();
+    _tabController = TabController(length: 3, vsync: this);
   }
 
-  void checkBoxChanged(bool? value, int index) {
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  void checkBoxChanged(bool? value, int index, int tabIndex) {
     setState(() {
-      db.toDoList[index].checkMark = !db.toDoList[index].checkMark;
+      if (tabIndex == 0) {
+        db.toDoList[index].checkMark = !db.toDoList[index].checkMark;
+      } else if (tabIndex == 1) {
+        final uncompletedTasks = db.getUncompletedTasks();
+        uncompletedTasks[index].checkMark = !uncompletedTasks[index].checkMark;
+      } else if (tabIndex == 2) {
+        final completedTasks = db.getCompletedTasks();
+        completedTasks[index].checkMark = !completedTasks[index].checkMark;
+      }
     });
     db.updateDB();
   }
@@ -108,13 +125,23 @@ class _HomeStackState extends State<HomeStack> {
     db.updateDB();
   }
 
-  void onReorder(int oldIndex, int newIndex) {
+  void onReorder(int oldIndex, int newIndex, int tabIndex) {
     setState(() {
       if (newIndex > oldIndex) {
         newIndex -= 1;
       }
-      final task = db.toDoList.removeAt(oldIndex);
-      db.toDoList.insert(newIndex, task);
+      if (tabIndex == 0) {
+        final task = db.toDoList.removeAt(oldIndex);
+        db.toDoList.insert(newIndex, task);
+      } else if (tabIndex == 1) {
+        final uncompletedTasks = db.getUncompletedTasks();
+        final task = uncompletedTasks.removeAt(oldIndex);
+        uncompletedTasks.insert(newIndex, task);
+      } else if (tabIndex == 2) {
+        final completedTasks = db.getCompletedTasks();
+        final task = completedTasks.removeAt(oldIndex);
+        completedTasks.insert(newIndex, task);
+      }
     });
     db.updateDB();
   }
@@ -153,12 +180,14 @@ class _HomeStackState extends State<HomeStack> {
                         padding: const EdgeInsets.only(left: 20),
                         child: Align(
                           alignment: Alignment.centerLeft,
-                          child: Text("Welcome!",
-                              style: TextStyle(
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold)),
+                          child: Text(
+                            "Welcome!",
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.secondary,
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                       ),
                     ],
@@ -169,8 +198,8 @@ class _HomeStackState extends State<HomeStack> {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         uncompletedCount != 0
-                            ? "you have $uncompletedCount uncomplete task today"
-                            : "You currently have no task to complete!",
+                            ? "You have $uncompletedCount incomplete tasks today"
+                            : "You currently have no tasks to complete!",
                         style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
@@ -181,27 +210,97 @@ class _HomeStackState extends State<HomeStack> {
                 ],
               ),
             ),
+            Container(
+              child: TabBar(
+                labelColor: Theme.of(context).colorScheme.secondary,
+                controller: _tabController,
+                tabs: const [
+                  Tab(
+                    text: 'All',
+                  ),
+                  Tab(text: 'Incomplete'),
+                  Tab(text: 'Completed'),
+                ],
+              ),
+            ),
             Expanded(
-              child: Scaffold(
-                body: ReorderableListView.builder(
-                  onReorder: onReorder,
-                  itemCount: db.toDoList.length,
-                  itemBuilder: (context, index) {
-                    return ToDoTile(
-                      key: Key('$index'),
-                      taskName: db.toDoList[index].taskName,
-                      onChanged: (value) => checkBoxChanged(value, index),
-                      taskCompleted: db.toDoList[index].checkMark,
-                      deleteFunction: () => deleteTask(index),
-                      editTask: () {
-                        setState(() {
-                          editedTaskIndex = index;
-                        });
-                        viewTask();
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  Scaffold(
+                    body: ReorderableListView.builder(
+                      onReorder: (oldIndex, newIndex) =>
+                          onReorder(oldIndex, newIndex, 0),
+                      itemCount: db.toDoList.length,
+                      itemBuilder: (context, index) {
+                        return ToDoTile(
+                          key: Key('$index'),
+                          taskName: db.toDoList[index].taskName,
+                          onChanged: (value) =>
+                              checkBoxChanged(value, index, 0),
+                          taskCompleted: db.toDoList[index].checkMark,
+                          deleteFunction: () => deleteTask(index),
+                          editTask: () {
+                            setState(() {
+                              editedTaskIndex = index;
+                            });
+                            viewTask();
+                          },
+                        );
                       },
-                    );
-                  },
-                ),
+                    ),
+                  ),
+                  // Incomplete Tab
+                  Scaffold(
+                    body: ReorderableListView.builder(
+                      onReorder: (oldIndex, newIndex) =>
+                          onReorder(oldIndex, newIndex, 1),
+                      itemCount: db.getUncompletedTasks().length,
+                      itemBuilder: (context, index) {
+                        final task = db.getUncompletedTasks()[index];
+                        return ToDoTile(
+                          key: Key('$index'),
+                          taskName: task.taskName,
+                          onChanged: (value) =>
+                              checkBoxChanged(value, index, 1),
+                          taskCompleted: task.checkMark,
+                          deleteFunction: () => deleteTask(index),
+                          editTask: () {
+                            setState(() {
+                              editedTaskIndex = index;
+                            });
+                            viewTask();
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                  // Completed Tab
+                  Scaffold(
+                    body: ReorderableListView.builder(
+                      onReorder: (oldIndex, newIndex) =>
+                          onReorder(oldIndex, newIndex, 2),
+                      itemCount: db.getCompletedTasks().length,
+                      itemBuilder: (context, index) {
+                        final task = db.getCompletedTasks()[index];
+                        return ToDoTile(
+                          key: Key('$index'),
+                          taskName: task.taskName,
+                          onChanged: (value) =>
+                              checkBoxChanged(value, index, 2),
+                          taskCompleted: task.checkMark,
+                          deleteFunction: () => deleteTask(index),
+                          editTask: () {
+                            setState(() {
+                              editedTaskIndex = index;
+                            });
+                            viewTask();
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
@@ -210,7 +309,8 @@ class _HomeStackState extends State<HomeStack> {
           bottom: 16.0,
           right: 16.0,
           child: FloatingActionButton(
-            backgroundColor: Theme.of(context).colorScheme.tertiary,
+            elevation: 0,
+            backgroundColor: Theme.of(context).colorScheme.secondary,
             onPressed: createNewTask,
             child: const Icon(Icons.add),
           ),
