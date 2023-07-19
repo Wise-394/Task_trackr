@@ -23,6 +23,8 @@ class _HomeStackState extends State<HomeStack>
 
   bool isEditing = false;
   int editedTaskIndex = -1;
+  String searchQuery = '';
+  final FocusNode _searchFocusNode = FocusNode();
 
   void editTask() {
     setState(() {
@@ -69,12 +71,20 @@ class _HomeStackState extends State<HomeStack>
     }
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
+    _tabController.addListener(_handleTabSelection);
   }
 
   @override
   void dispose() {
+    _tabController.removeListener(_handleTabSelection);
     _tabController.dispose();
     super.dispose();
+  }
+
+  void _handleTabSelection() {
+    setState(() {
+      searchQuery = ''; // Reset search query when tab changes
+    });
   }
 
   void checkBoxChanged(bool? value, int index, int tabIndex) {
@@ -161,6 +171,22 @@ class _HomeStackState extends State<HomeStack>
     );
   }
 
+  List<TaskEntity> getFilteredTasks(int tabIndex) {
+    final List<TaskEntity> allTasks = db.toDoList;
+    if (searchQuery.isEmpty) {
+      return allTasks;
+    } else {
+      final String query = searchQuery.toLowerCase();
+      return allTasks
+          .where((task) =>
+              task.taskName.toLowerCase().contains(query) &&
+              (tabIndex == 0 ||
+                  (tabIndex == 1 && !task.checkMark) ||
+                  (tabIndex == 2 && task.checkMark)))
+          .toList();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     int uncompletedCount = db.getUncompleteTask();
@@ -207,21 +233,31 @@ class _HomeStackState extends State<HomeStack>
                       ),
                     ),
                   ),
+                  TextField(
+                    focusNode: _searchFocusNode,
+                    decoration: const InputDecoration(
+                      labelText: 'Search task',
+                      prefixIcon: Icon(Icons.search),
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        searchQuery = value;
+                      });
+                    },
+                  ),
                 ],
               ),
             ),
-            Container(
-              child: TabBar(
-                labelColor: Theme.of(context).colorScheme.secondary,
-                controller: _tabController,
-                tabs: const [
-                  Tab(
-                    text: 'All',
-                  ),
-                  Tab(text: 'Incomplete'),
-                  Tab(text: 'Completed'),
-                ],
-              ),
+            TabBar(
+              labelColor: Theme.of(context).colorScheme.secondary,
+              controller: _tabController,
+              tabs: const [
+                Tab(
+                  text: 'All',
+                ),
+                Tab(text: 'Incomplete'),
+                Tab(text: 'Completed'),
+              ],
             ),
             Expanded(
               child: TabBarView(
@@ -231,14 +267,15 @@ class _HomeStackState extends State<HomeStack>
                     body: ReorderableListView.builder(
                       onReorder: (oldIndex, newIndex) =>
                           onReorder(oldIndex, newIndex, 0),
-                      itemCount: db.toDoList.length,
+                      itemCount: getFilteredTasks(0).length,
                       itemBuilder: (context, index) {
+                        final task = getFilteredTasks(0)[index];
                         return ToDoTile(
                           key: Key('$index'),
-                          taskName: db.toDoList[index].taskName,
+                          taskName: task.taskName,
                           onChanged: (value) =>
                               checkBoxChanged(value, index, 0),
-                          taskCompleted: db.toDoList[index].checkMark,
+                          taskCompleted: task.checkMark,
                           deleteFunction: () => deleteTask(index),
                           editTask: () {
                             setState(() {
@@ -250,14 +287,13 @@ class _HomeStackState extends State<HomeStack>
                       },
                     ),
                   ),
-                  // Incomplete Tab
                   Scaffold(
                     body: ReorderableListView.builder(
                       onReorder: (oldIndex, newIndex) =>
                           onReorder(oldIndex, newIndex, 1),
-                      itemCount: db.getUncompletedTasks().length,
+                      itemCount: getFilteredTasks(1).length,
                       itemBuilder: (context, index) {
-                        final task = db.getUncompletedTasks()[index];
+                        final task = getFilteredTasks(1)[index];
                         return ToDoTile(
                           key: Key('$index'),
                           taskName: task.taskName,
@@ -275,14 +311,13 @@ class _HomeStackState extends State<HomeStack>
                       },
                     ),
                   ),
-                  // Completed Tab
                   Scaffold(
                     body: ReorderableListView.builder(
                       onReorder: (oldIndex, newIndex) =>
                           onReorder(oldIndex, newIndex, 2),
-                      itemCount: db.getCompletedTasks().length,
+                      itemCount: getFilteredTasks(2).length,
                       itemBuilder: (context, index) {
-                        final task = db.getCompletedTasks()[index];
+                        final task = getFilteredTasks(2)[index];
                         return ToDoTile(
                           key: Key('$index'),
                           taskName: task.taskName,

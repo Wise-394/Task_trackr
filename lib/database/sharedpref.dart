@@ -36,7 +36,6 @@ class SharedPref {
   static bool isPinEnable = false;
   void loadPin() {
     pin = _sharedPref.get('pin', defaultValue: 0);
-    print("current pin is $pin");
   }
 
   void updatePin(int pinToUpdate) {

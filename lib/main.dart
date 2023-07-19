@@ -44,7 +44,6 @@ class MyApp extends StatelessWidget {
   @override
   @override
   Widget build(BuildContext context) {
-    print("current route value is $route");
     return GetMaterialApp(
       theme: lightTheme,
       darkTheme: darkTheme,

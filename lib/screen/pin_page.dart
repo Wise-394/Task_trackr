@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:todo_app/database/sharedpref.dart';
 import 'package:todo_app/default_scaffold.dart';
 
@@ -27,7 +26,6 @@ class _PinPage extends State<PinPage> {
           builder: (context) => const DefaultScaffold(),
         ),
       );
-      print("GOINGNOW");
     }
   }
 

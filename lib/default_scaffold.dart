@@ -25,7 +25,6 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
 
   @override
   Widget build(BuildContext context) {
-    print("current page is home");
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
