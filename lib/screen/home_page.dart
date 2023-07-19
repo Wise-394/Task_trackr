@@ -24,7 +24,6 @@ class _HomeStackState extends State<HomeStack>
   bool isEditing = false;
   int editedTaskIndex = -1;
   String searchQuery = '';
-  final FocusNode _searchFocusNode = FocusNode();
 
   void editTask() {
     setState(() {
@@ -71,20 +70,12 @@ class _HomeStackState extends State<HomeStack>
     }
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
-    _tabController.addListener(_handleTabSelection);
   }
 
   @override
   void dispose() {
-    _tabController.removeListener(_handleTabSelection);
     _tabController.dispose();
     super.dispose();
-  }
-
-  void _handleTabSelection() {
-    setState(() {
-      searchQuery = ''; // Reset search query when tab changes
-    });
   }
 
   void checkBoxChanged(bool? value, int index, int tabIndex) {
@@ -171,18 +162,13 @@ class _HomeStackState extends State<HomeStack>
     );
   }
 
-  List<TaskEntity> getFilteredTasks(int tabIndex) {
-    final List<TaskEntity> allTasks = db.toDoList;
+  List<TaskEntity> getFilteredTasks() {
     if (searchQuery.isEmpty) {
-      return allTasks;
+      return db.toDoList;
     } else {
-      final String query = searchQuery.toLowerCase();
-      return allTasks
+      return db.toDoList
           .where((task) =>
-              task.taskName.toLowerCase().contains(query) &&
-              (tabIndex == 0 ||
-                  (tabIndex == 1 && !task.checkMark) ||
-                  (tabIndex == 2 && task.checkMark)))
+              task.taskName.toLowerCase().contains(searchQuery.toLowerCase()))
           .toList();
     }
   }
@@ -233,18 +219,6 @@ class _HomeStackState extends State<HomeStack>
                       ),
                     ),
                   ),
-                  TextField(
-                    focusNode: _searchFocusNode,
-                    decoration: const InputDecoration(
-                      labelText: 'Search task',
-                      prefixIcon: Icon(Icons.search),
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        searchQuery = value;
-                      });
-                    },
-                  ),
                 ],
               ),
             ),
@@ -264,36 +238,57 @@ class _HomeStackState extends State<HomeStack>
                 controller: _tabController,
                 children: [
                   Scaffold(
-                    body: ReorderableListView.builder(
-                      onReorder: (oldIndex, newIndex) =>
-                          onReorder(oldIndex, newIndex, 0),
-                      itemCount: getFilteredTasks(0).length,
-                      itemBuilder: (context, index) {
-                        final task = getFilteredTasks(0)[index];
-                        return ToDoTile(
-                          key: Key('$index'),
-                          taskName: task.taskName,
-                          onChanged: (value) =>
-                              checkBoxChanged(value, index, 0),
-                          taskCompleted: task.checkMark,
-                          deleteFunction: () => deleteTask(index),
-                          editTask: () {
-                            setState(() {
-                              editedTaskIndex = index;
-                            });
-                            viewTask();
-                          },
-                        );
-                      },
+                    body: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 30, right: 30),
+                          child: TextField(
+                            decoration: const InputDecoration(
+                              labelText: 'Search task',
+                              prefixIcon: Icon(Icons.search),
+                            ),
+                            onChanged: (value) {
+                              setState(() {
+                                searchQuery = value;
+                              });
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: ReorderableListView.builder(
+                            onReorder: (oldIndex, newIndex) =>
+                                onReorder(oldIndex, newIndex, 0),
+                            itemCount: getFilteredTasks().length,
+                            itemBuilder: (context, index) {
+                              final task = getFilteredTasks()[index];
+                              return ToDoTile(
+                                key: Key('$index'),
+                                taskName: task.taskName,
+                                onChanged: (value) =>
+                                    checkBoxChanged(value, index, 0),
+                                taskCompleted: task.checkMark,
+                                deleteFunction: () => deleteTask(index),
+                                editTask: () {
+                                  setState(() {
+                                    editedTaskIndex = index;
+                                  });
+                                  viewTask();
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
+                  // Incomplete Tab
                   Scaffold(
                     body: ReorderableListView.builder(
                       onReorder: (oldIndex, newIndex) =>
                           onReorder(oldIndex, newIndex, 1),
-                      itemCount: getFilteredTasks(1).length,
+                      itemCount: db.getUncompletedTasks().length,
                       itemBuilder: (context, index) {
-                        final task = getFilteredTasks(1)[index];
+                        final task = db.getUncompletedTasks()[index];
                         return ToDoTile(
                           key: Key('$index'),
                           taskName: task.taskName,
@@ -311,13 +306,14 @@ class _HomeStackState extends State<HomeStack>
                       },
                     ),
                   ),
+                  // Completed Tab
                   Scaffold(
                     body: ReorderableListView.builder(
                       onReorder: (oldIndex, newIndex) =>
                           onReorder(oldIndex, newIndex, 2),
-                      itemCount: getFilteredTasks(2).length,
+                      itemCount: db.getCompletedTasks().length,
                       itemBuilder: (context, index) {
-                        final task = getFilteredTasks(2)[index];
+                        final task = db.getCompletedTasks()[index];
                         return ToDoTile(
                           key: Key('$index'),
                           taskName: task.taskName,
