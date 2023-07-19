@@ -15,6 +15,11 @@ class _PinPage extends State<PinPage> {
   }
 
   var sp = SharedPref();
+  final snackBar = const SnackBar(
+    content: Text('Invalid password'),
+    duration: Duration(seconds: 1),
+  );
+
   void onPressCheck() {
     sp.loadPin();
     final pin = sp.getPin();
@@ -26,6 +31,8 @@ class _PinPage extends State<PinPage> {
           builder: (context) => const DefaultScaffold(),
         ),
       );
+    } else if (_textController.text.isNotEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
   }
 
@@ -46,6 +53,17 @@ class _PinPage extends State<PinPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Theme.of(context).colorScheme.background,
+          title: Center(
+            child: Text(
+              'Task Trackr',
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+          )),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.max,

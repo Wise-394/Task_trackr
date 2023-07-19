@@ -30,6 +30,13 @@ class _ChangePinDialog extends State<ChangePinDialog> {
             ),
             keyboardType: TextInputType.number,
             obscureText: true,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          const Text(
+            'Pin must be between 4-8 digits',
+            style: TextStyle(fontStyle: FontStyle.italic),
           )
         ]),
         actions: <Widget>[

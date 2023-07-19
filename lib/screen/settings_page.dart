@@ -77,6 +77,13 @@ class _SettingsPageState extends State<SettingsPage> {
           iconImg: Icons.pin,
           onPressed: onPressChangePin,
         ),
+        SettingsTile(
+          tileTile: 'Forgot Password Hint',
+          iconImg: Icons.question_mark,
+          iconText: 'HINT',
+          onPressed: () {},
+          enabled: switchOn,
+        ),
       ],
     );
   }
