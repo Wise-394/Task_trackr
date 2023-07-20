@@ -9,8 +9,8 @@ class ToDoDB {
 
   void initDB() {
     toDoList = [
-      TaskEntity(taskName: "test", checkMark: false),
-      TaskEntity(taskName: 'test2', checkMark: false)
+      TaskEntity(taskName: "Your task is empty", checkMark: false),
+      TaskEntity(taskName: 'Add a new task', checkMark: false)
     ];
   }
 

@@ -93,7 +93,7 @@ class _SettingsPageState extends State<SettingsPage> {
           iconText: sp.getTheme() ? "Light mode" : "Dark Mode",
           onPressed: () {
             sp.changeTheme();
-            setState(() {}); // Add this line to update the widget state
+            setState(() {});
           },
         ),
         SettingsSwitchTile(
