@@ -41,9 +41,12 @@ class _ChangePinDialog extends State<ChangePinDialog> {
           const SizedBox(
             height: 10,
           ),
-          Text(
-            widget.dialogHint,
-            style: const TextStyle(fontStyle: FontStyle.italic),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              widget.dialogHint,
+              style: const TextStyle(fontStyle: FontStyle.italic),
+            ),
           )
         ]),
         actions: <Widget>[

@@ -1,4 +1,4 @@
-name: todo_app
+name: task_trackr
 description: A new Flutter project.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -45,6 +45,12 @@ dev_dependencies:
     sdk: flutter
   hive_generator: ^2.0.0
   build_runner: ^2.3.2
+  flutter_launcher_icons: "^0.13.1"
+
+flutter_launcher_icons:
+  image_path: "image/icon/icon.png"
+  android: true
+  ios: true
 
 
   # The "flutter_lints" package below contains a set of recommended lints to

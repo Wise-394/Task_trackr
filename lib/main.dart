@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/database/task_entity.dart';
-import 'package:todo_app/default_scaffold.dart';
+import 'package:task_trackr/database/task_entity.dart';
+import 'package:task_trackr/default_scaffold.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:get/get.dart';
-import 'package:todo_app/screen/pin_page.dart';
-import 'package:todo_app/themes/dark_mode.dart';
+import 'package:task_trackr/screen/pin_page.dart';
+import 'package:task_trackr/themes/dark_mode.dart';
 import 'database/sharedpref.dart';
 import 'themes/light_mode.dart';
 

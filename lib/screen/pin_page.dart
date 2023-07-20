@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/database/sharedpref.dart';
-import 'package:todo_app/default_scaffold.dart';
-import 'package:todo_app/util/button.dart';
+import 'package:task_trackr/database/sharedpref.dart';
+import 'package:task_trackr/default_scaffold.dart';
+import 'package:task_trackr/util/button.dart';
 
 class PinPage extends StatefulWidget {
   const PinPage({super.key});

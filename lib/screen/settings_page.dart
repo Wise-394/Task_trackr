@@ -66,7 +66,8 @@ class _SettingsPageState extends State<SettingsPage> {
         return ChangePinDialog(
           isChangePin: false,
           dialogTitle: 'Forgot Password Hint',
-          dialogHint: 'This hint will be displayed if u forgot your password',
+          dialogHint:
+              'This hint will be displayed if you forgotten your password',
           textController: _hintTextEditingController,
           onSave: () => onSavePinHint(),
           onCancel: () => Navigator.of(context).pop(),

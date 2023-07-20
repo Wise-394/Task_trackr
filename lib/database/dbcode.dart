@@ -1,5 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:todo_app/database/task_entity.dart';
+import 'package:task_trackr/database/task_entity.dart';
 
 class ToDoDB {
   List<TaskEntity> toDoList = [];

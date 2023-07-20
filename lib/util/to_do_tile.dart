@@ -50,15 +50,18 @@ class ToDoTile extends StatelessWidget {
                 Flexible(
                   flex: 5,
                   fit: FlexFit.tight,
-                  child: Text(
-                    softWrap: true,
-                    taskName,
-                    style: TextStyle(
-                      //fontWeight: FontWeight.bold,
-                      //color: Theme.of(context).colorScheme.primary,
-                      decoration: taskCompleted
-                          ? TextDecoration.lineThrough
-                          : TextDecoration.none,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      softWrap: true,
+                      taskName,
+                      style: TextStyle(
+                        //fontWeight: FontWeight.bold,
+                        //color: Theme.of(context).colorScheme.primary,
+                        decoration: taskCompleted
+                            ? TextDecoration.lineThrough
+                            : TextDecoration.none,
+                      ),
                     ),
                   ),
                 ),
