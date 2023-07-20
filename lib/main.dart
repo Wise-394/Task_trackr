@@ -30,6 +30,7 @@ void _initData() {
   sp.loadTheme();
   sp.loadPin();
   sp.loadPinSwitch();
+  sp.loadPinHint();
 }
 
 class MyApp extends StatelessWidget {

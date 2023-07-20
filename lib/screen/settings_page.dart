@@ -14,6 +14,7 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   SharedPref sp = SharedPref();
   final _textEditingController = TextEditingController();
+  final _hintTextEditingController = TextEditingController();
   bool switchOn = false;
 
   @override
@@ -45,12 +46,40 @@ class _SettingsPageState extends State<SettingsPage> {
       context: context,
       builder: (BuildContext context) {
         return ChangePinDialog(
+          isChangePin: true,
+          dialogTitle: 'Change Pin',
+          dialogHint: 'Pin must be between 4-8 digits',
           textController: _textEditingController,
           onSave: () => onSavePin(),
           onCancel: () => Navigator.of(context).pop(),
         );
       },
     );
+  }
+
+  //pinHint
+  void onPressChangePinHint() {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return ChangePinDialog(
+          isChangePin: false,
+          dialogTitle: 'Forgot Password Hint',
+          dialogHint: 'This hint will be displayed if u forgot your password',
+          textController: _hintTextEditingController,
+          onSave: () => onSavePinHint(),
+          onCancel: () => Navigator.of(context).pop(),
+        );
+      },
+    );
+  }
+
+  void onSavePinHint() {
+    if (_hintTextEditingController.text.isNotEmpty) {
+      sp.updatePinHint(_hintTextEditingController.text);
+      Navigator.of(context).pop();
+    }
   }
 
   @override
@@ -81,7 +110,7 @@ class _SettingsPageState extends State<SettingsPage> {
           tileTile: 'Forgot Password Hint',
           iconImg: Icons.question_mark,
           iconText: 'HINT',
-          onPressed: () {},
+          onPressed: () => onPressChangePinHint(),
           enabled: switchOn,
         ),
       ],

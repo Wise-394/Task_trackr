@@ -59,4 +59,16 @@ class SharedPref {
   bool getPinSwitch() {
     return isPinEnable;
   }
+
+  static String pinHint = '';
+  void loadPinHint() {
+    pinHint = _sharedPref.get('pinHint', defaultValue: '');
+  }
+
+  void updatePinHint(String pinHintUpdate) {
+    _sharedPref.put('pinHint', pinHintUpdate);
+    pinHint = pinHintUpdate;
+  }
+
+  String getPinHint() => pinHint;
 }

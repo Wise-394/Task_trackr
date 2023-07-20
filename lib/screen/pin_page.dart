@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/database/sharedpref.dart';
 import 'package:todo_app/default_scaffold.dart';
+import 'package:todo_app/util/button.dart';
 
 class PinPage extends StatefulWidget {
   const PinPage({super.key});
@@ -19,6 +20,7 @@ class _PinPage extends State<PinPage> {
     content: Text('Invalid password'),
     duration: Duration(seconds: 1),
   );
+  final snackBarHint = const SnackBar(content: Text('No Hint Especified'));
 
   void onPressCheck() {
     sp.loadPin();
@@ -47,6 +49,35 @@ class _PinPage extends State<PinPage> {
     if (currentText.isNotEmpty) {
       String updatedText = currentText.substring(0, currentText.length - 1);
       _textController.text = updatedText;
+    }
+  }
+
+  void onPressForgotPassword() {
+    String hint = sp.getPinHint();
+    if (hint != '') {
+      showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Center(child: Text('Password Hint')),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [Text(hint)],
+            ),
+            actions: [
+              Center(
+                child: BtnPrototype(
+                  btnAction: () => Navigator.of(context).pop(),
+                  btnText: 'Okay',
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(snackBarHint);
     }
   }
 
@@ -85,6 +116,9 @@ class _PinPage extends State<PinPage> {
                 ),
               ),
             ),
+            TextButton(
+                onPressed: () => onPressForgotPassword(),
+                child: const Text('Forgot Password')),
             const SizedBox(height: 75),
             // Generate rows of PinButton widgets using loops
             for (int row = 0; row < 3; row++)

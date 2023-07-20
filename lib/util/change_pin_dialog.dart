@@ -6,11 +6,17 @@ class ChangePinDialog extends StatefulWidget {
   final VoidCallback onCancel;
   final VoidCallback onSave;
   final TextEditingController textController;
+  final String dialogTitle;
+  final String dialogHint;
+  final bool isChangePin;
   const ChangePinDialog({
     super.key,
     required this.onSave,
     required this.onCancel,
     required this.textController,
+    required this.dialogTitle,
+    required this.dialogHint,
+    required this.isChangePin,
   });
 
   @override
@@ -21,22 +27,23 @@ class _ChangePinDialog extends State<ChangePinDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-        title: const Text("Change Pin"),
+        title: Text(widget.dialogTitle),
         content: Column(mainAxisSize: MainAxisSize.min, children: [
           TextField(
             controller: widget.textController,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
             ),
-            keyboardType: TextInputType.number,
-            obscureText: true,
+            keyboardType:
+                widget.isChangePin ? TextInputType.number : TextInputType.text,
+            obscureText: widget.isChangePin ? true : false,
           ),
           const SizedBox(
             height: 10,
           ),
-          const Text(
-            'Pin must be between 4-8 digits',
-            style: TextStyle(fontStyle: FontStyle.italic),
+          Text(
+            widget.dialogHint,
+            style: const TextStyle(fontStyle: FontStyle.italic),
           )
         ]),
         actions: <Widget>[
