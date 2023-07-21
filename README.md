@@ -1,5 +1,6 @@
 
 # Task Trackr
+[![wakatime](https://wakatime.com/badge/user/ab38c3e5-ffca-4677-9484-e3e6f237dea5/project/76e7ea58-ca3b-4688-b05b-2505dc8a8256.svg)](https://wakatime.com/badge/user/ab38c3e5-ffca-4677-9484-e3e6f237dea5/project/76e7ea58-ca3b-4688-b05b-2505dc8a8256)
 
 Task Trackr is a simple and user-friendly todo app that helps you stay organized and manage your tasks effectively. With features like pin security and theme customizatiom. Task Trackr is the companion for your productivity needs.
 
