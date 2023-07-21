@@ -3,6 +3,7 @@
 
 Task Trackr is a simple and user-friendly todo app that helps you stay organized and manage your tasks effectively. With features like pin security and theme customizatiom. Task Trackr is the companion for your productivity needs.
 
+[![download](https://img.shields.io/badge/CLick_me_to_download-black?style=for-the-badge&logo=android&logoColor=white)](https://github.com/Wise-394/Task_trackr/releases/tag/1.0.0)
 ## Tech used
 
 
