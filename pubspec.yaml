@@ -33,6 +33,7 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   get: ^4.6.5
+  flutter_native_splash: ^2.3.1
 
 
 
@@ -51,6 +52,10 @@ flutter_launcher_icons:
   image_path: "image/icon/icon.png"
   android: true
   ios: true
+
+flutter_native_splash:
+  color: "#FFFFFF"
+  background_image: "image/icon/icon.png"
 
 
   # The "flutter_lints" package below contains a set of recommended lints to

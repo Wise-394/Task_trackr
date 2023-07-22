@@ -119,11 +119,10 @@ class _PinPage extends State<PinPage> {
             TextButton(
                 onPressed: () => onPressForgotPassword(),
                 child: const Text('Forgot Password')),
-            const SizedBox(height: 75),
             // Generate rows of PinButton widgets using loops
             for (int row = 0; row < 3; row++)
               Padding(
-                padding: EdgeInsets.only(top: row == 0 ? 0.0 : 20.0),
+                padding: EdgeInsets.only(top: row == 0 ? 0.0 : 35.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
